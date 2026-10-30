@@ -1,0 +1,35 @@
+# Unreal Engine generated folders
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+.idea/
+.vs/
+.vscode/
+
+# Generated project files
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+*.xcodeproj
+*.xcworkspace
+
+# Compiled / debug artifacts
+*.pdb
+*.exp
+*.ilk
+*.obj
+*.o
+*.lib
+*.a
+*.dll
+*.exe
+*.dSYM/
+
+# Misc
+.DS_Store
+Thumbs.db
