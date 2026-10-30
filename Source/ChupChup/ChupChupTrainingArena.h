@@ -5,7 +5,7 @@
 #include "ChupChupTrainingArena.generated.h"
 
 class AChupChupTargetBot;
-class ATargetPoint;
+class APlayerStart;
 class UStaticMesh;
 class UStaticMeshComponent;
 
@@ -44,7 +44,7 @@ protected:
 	TObjectPtr<UStaticMesh> CubeMesh;
 
 	UPROPERTY()
-	TObjectPtr<ATargetPoint> PlayerSpawnPoint;
+	TObjectPtr<APlayerStart> PlayerSpawnPoint;
 
 	UPROPERTY()
 	TArray<TObjectPtr<AChupChupTargetBot>> Bots;

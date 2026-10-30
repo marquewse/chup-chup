@@ -5,7 +5,7 @@
 
 #include "Components/StaticMeshComponent.h"
 #include "Engine/StaticMesh.h"
-#include "Engine/TargetPoint.h"
+#include "GameFramework/PlayerStart.h"
 #include "Engine/World.h"
 #include "UObject/ConstructorHelpers.h"
 
@@ -169,5 +169,5 @@ void AChupChupTrainingArena::BuildArena()
 	Params.Owner = this;
 	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	const FVector SpawnLocation = GetActorTransform().TransformPosition(FVector(-700.f, 0.f, FloorZ + 100.f));
-	PlayerSpawnPoint = GetWorld()->SpawnActor<ATargetPoint>(ATargetPoint::StaticClass(), SpawnLocation, GetActorRotation(), Params);
+	PlayerSpawnPoint = GetWorld()->SpawnActor<APlayerStart>(APlayerStart::StaticClass(), SpawnLocation, GetActorRotation(), Params);
 }
