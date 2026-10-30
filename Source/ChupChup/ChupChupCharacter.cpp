@@ -61,7 +61,7 @@ void AChupChupCharacter::BeginPlay()
 
 	for (const TSubclassOf<AChupChupWeapon>& WeaponClass : DefaultWeapons)
 	{
-		if (WeaponClass == nullptr)
+		if (!WeaponClass)
 		{
 			continue;
 		}
@@ -84,9 +84,10 @@ void AChupChupCharacter::Tick(float DeltaSeconds)
 
 	// Ease the camera to eye height after the capsule changes size.
 	FVector CameraLocation = FirstPersonCamera->GetRelativeLocation();
-	if (!FMath::IsNearlyEqual(CameraLocation.Z, EyeHeight))
+	const float CameraZ = static_cast<float>(CameraLocation.Z);
+	if (!FMath::IsNearlyEqual(CameraZ, EyeHeight))
 	{
-		CameraLocation.Z = FMath::FInterpTo(CameraLocation.Z, EyeHeight, DeltaSeconds, CrouchCameraInterpSpeed);
+		CameraLocation.Z = FMath::FInterpTo(CameraZ, EyeHeight, DeltaSeconds, CrouchCameraInterpSpeed);
 		FirstPersonCamera->SetRelativeLocation(CameraLocation);
 	}
 }

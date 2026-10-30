@@ -163,7 +163,7 @@ float AChupChupWeapon::GetCurrentSpread() const
 		const UCharacterMovementComponent* Movement = OwnerCharacter->GetCharacterMovement();
 		const float RunSpeed = FMath::Max(OwnerCharacter->GetRunSpeed(), 1.f);
 		const float AccurateSpeed = RunSpeed * 0.34f;
-		const float Speed = OwnerCharacter->GetVelocity().Size2D();
+		const float Speed = static_cast<float>(OwnerCharacter->GetVelocity().Size2D());
 
 		Spread += MovingSpread * FMath::Clamp((Speed - AccurateSpeed) / (RunSpeed - AccurateSpeed), 0.f, 1.f);
 
@@ -307,7 +307,7 @@ FVector2D AChupChupWeapon::GetPatternOffset(float ShotIndex) const
 	const int32 Index0 = FMath::Clamp(FMath::FloorToInt(ShotIndex), 0, LastIndex);
 	const int32 Index1 = FMath::Min(Index0 + 1, LastIndex);
 	const float Alpha = FMath::Clamp(ShotIndex - static_cast<float>(Index0), 0.f, 1.f);
-	return FMath::Lerp(SprayPattern[Index0], SprayPattern[Index1], Alpha);
+	return SprayPattern[Index0] + (SprayPattern[Index1] - SprayPattern[Index0]) * Alpha;
 }
 
 void AChupChupWeapon::UpdateRecoil(float DeltaSeconds, float Now)
@@ -373,7 +373,8 @@ void AChupChupWeapon::UpdateProceduralAnimation(float DeltaSeconds, float Now)
 	{
 		const UCharacterMovementComponent* Movement = OwnerCharacter->GetCharacterMovement();
 		const bool bGrounded = Movement != nullptr && Movement->IsMovingOnGround();
-		const float SpeedAlpha = bGrounded ? FMath::Clamp(OwnerCharacter->GetVelocity().Size2D() / FMath::Max(OwnerCharacter->GetRunSpeed(), 1.f), 0.f, 1.f) : 0.f;
+		const float GroundSpeed = static_cast<float>(OwnerCharacter->GetVelocity().Size2D());
+		const float SpeedAlpha = bGrounded ? FMath::Clamp(GroundSpeed / FMath::Max(OwnerCharacter->GetRunSpeed(), 1.f), 0.f, 1.f) : 0.f;
 
 		BobTime += DeltaSeconds * (4.f + 6.f * SpeedAlpha);
 		Location.Z += FMath::Sin(BobTime * 2.f) * 0.6f * SpeedAlpha;
